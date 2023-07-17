@@ -11,7 +11,6 @@ export type Drill = {
 };
 
 export type Playlist = {
-   id: string;
    title: string;
    drills: Drill[];
 };

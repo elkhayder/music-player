@@ -2,7 +2,6 @@ import { Playlist } from "./types";
 
 export const Playlists: Playlist[] = [
    {
-      id: "1",
       title: "Playlist 1",
       drills: [
          {

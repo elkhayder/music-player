@@ -1,12 +1,23 @@
 import { defineStore } from "pinia";
 import { Playlists } from "../utils/db";
-import { DrillType } from "../utils/types";
+import { Drill, DrillType, Playlist } from "../utils/types";
 import { usePlayerStore } from "./player";
 
 export const useTracksStore = defineStore("tracks", () => {
    const playerStore = usePlayerStore();
 
-   const playlist = Playlists[0];
+   const playlist = reactive<Playlist>({
+      title: "Placeholder",
+      drills: [],
+   });
+
+   const setPlaylistTitle = (title: string) => {
+      playlist.title = title;
+   };
+
+   const setDrills = (tracks: Drill[]) => {
+      playlist.drills = tracks;
+   };
 
    const filter = ref<DrillType | "All">("All");
    const setFilter = (type: DrillType | "All") => {
@@ -70,6 +81,8 @@ export const useTracksStore = defineStore("tracks", () => {
 
    return {
       playlist,
+      setPlaylistTitle,
+      setDrills,
       currentTrack,
       currentTrackID,
       setCurrentTrackID,

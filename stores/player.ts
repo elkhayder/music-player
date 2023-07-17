@@ -9,6 +9,7 @@ export const usePlayerStore = defineStore("player", () => {
    const Setup = () => {
       context.value = new AudioContext();
       audio.value = new Audio();
+      audio.value.crossOrigin = "anonymous";
       const source = context.value.createMediaElementSource(audio.value);
       source.connect(context.value.destination);
 
