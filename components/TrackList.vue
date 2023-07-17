@@ -24,44 +24,7 @@ const drills = computed(() => trackStore.filteredTracks);
             </tr>
          </thead>
          <tbody>
-            <tr
-               v-for="drill of drills"
-               class="border-b border-gray-700 hover:bg-gray-500 cursor-pointer"
-               :class="{
-                  'bg-gray-600': drill.id === trackStore.currentTrackID,
-               }"
-               :key="drill.id"
-               @click="() => trackStore.setCurrentTrackID(drill.id)"
-            >
-               <th scope="row" class="text-center">
-                  <!-- font-medium whitespace-nowrap  -->
-                  20
-               </th>
-               <td class="text-center">
-                  <i
-                     class="fas"
-                     :class="{
-                        'fa-play':
-                           !playerStore.isPlaying ||
-                           drill.id !== trackStore.currentTrackID,
-                        'fa-pause':
-                           drill.id === trackStore.currentTrackID &&
-                           playerStore.isPlaying,
-                     }"
-                  />
-               </td>
-               <td>{{ drill.type }}</td>
-               <td>
-                  <h5 class="text-base">{{ drill.titles.spanish }}</h5>
-                  <h6 class="text-sm">{{ drill.titles.english }}</h6>
-               </td>
-               <td>
-                  <AudioWave :HeightMax="20" :HeightMin="4" :BarsCount="30" />
-                  <!-- <time>00:19</time> -->
-               </td>
-               <td class="text-center"><i class="fas fa-eye" /></td>
-               <td class="text-center"><i class="fas fa-signal-3" /></td>
-            </tr>
+            <TrackListEntry v-for="drill of drills" :drill="drill" />
          </tbody>
       </table>
    </section>
@@ -70,9 +33,5 @@ const drills = computed(() => trackStore.filteredTracks);
 <style lang="scss" scoped>
 th {
    @apply px-6 py-3 capitalize;
-}
-
-td {
-   @apply px-6 py-4;
 }
 </style>

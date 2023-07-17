@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { Playlists } from "../utils/db";
 import { Drill, DrillType, Playlist } from "../utils/types";
 import { usePlayerStore } from "./player";
 
@@ -17,6 +16,20 @@ export const useTracksStore = defineStore("tracks", () => {
 
    const setDrills = (tracks: Drill[]) => {
       playlist.drills = tracks;
+
+      if (!process.client) return;
+      playlist.drills.forEach((drill) => {
+         drill.plays = localStorage.getItem(drill.id)
+            ? parseInt(localStorage.getItem(drill.id)!)
+            : 0;
+      });
+   };
+
+   const toggleIsHidden = (id: string) => {
+      const drill = playlist.drills.find((x) => x.id === id);
+      if (!drill) return;
+
+      drill.isHidden = !drill.isHidden;
    };
 
    const filter = ref<DrillType | "All">("All");
@@ -30,10 +43,18 @@ export const useTracksStore = defineStore("tracks", () => {
       )
    );
 
+   const nonHiddenTracks = computed(() =>
+      filteredTracks.value.filter((x) => !x.isHidden)
+   );
+
    const currentTrackID = ref<string | null>(null);
    const setCurrentTrackID = (id: string) => {
       currentTrackID.value = id;
       playerStore.setAudioSrc(currentTrack.value!.src);
+
+      // Increase plays count
+      const newCount = ++playlist.drills.find((x) => x.id === id)!.plays!;
+      localStorage.setItem(id, newCount.toString());
    };
 
    const currentTrack = computed(
@@ -60,23 +81,22 @@ export const useTracksStore = defineStore("tracks", () => {
       );
 
       var newIndex;
-
-      if (!isShuffled.value && currentTrackIndex == 0 && indexOffset == -1) {
-         newIndex = filteredTracks.value.length - 1;
-      } else if (
-         !isShuffled.value &&
-         currentTrackIndex == filteredTracks.value.length - 1 &&
-         indexOffset == 1
-      ) {
+      if (isShuffled.value) {
+         newIndex = Math.floor(Math.random() * filteredTracks.value.length);
+      } else if (currentTrackIndex == -1) {
          newIndex = 0;
       } else {
-         newIndex = isShuffled.value
-            ? Math.floor(Math.random() * filteredTracks.value.length)
-            : currentTrackIndex + indexOffset;
+         newIndex =
+            (currentTrackIndex + indexOffset) % filteredTracks.value.length;
       }
 
-      const newTrackId = filteredTracks.value[newIndex]!.id;
-      setCurrentTrackID(newTrackId);
+      const nextTrack = filteredTracks.value.at(newIndex);
+
+      if (nextTrack?.isHidden) {
+         setRelativeTrack(Math.sign(indexOffset) * (Math.abs(indexOffset) + 1));
+      } else {
+         setCurrentTrackID(nextTrack!.id);
+      }
    };
 
    return {
@@ -95,5 +115,6 @@ export const useTracksStore = defineStore("tracks", () => {
       toggleRepeat,
       nextTrack,
       previousTrack,
+      toggleIsHidden,
    };
 });

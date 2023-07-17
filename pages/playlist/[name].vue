@@ -11,7 +11,7 @@ import { Drill } from "utils/types";
 
 const route = useRoute();
 
-const { data } = await useFetch<Drill[]>("/api/fetch", {
+const { data, error, status } = await useFetch<Drill[]>("/api/fetch", {
    query: {
       playlist: route.params.name,
    },
@@ -26,6 +26,7 @@ if (data.value) {
 </script>
 
 <template>
+   <Title>{{ route.params.name }} — Spanish Audio Drills</Title>
    <main class="max-w-6xl mx-auto">
       <section
          class="flex max-md:flex-col items-center justify-between p-8 gap-8"

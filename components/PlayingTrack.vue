@@ -24,7 +24,7 @@ const playerStore = usePlayerStore();
          </div>
          <h2 class="text-xs md:text-base">{{ track.type }}</h2>
       </div>
-      <div class="mt-6 flex items-center gap-4">
+      <div class="mt-6 flex items-center gap-4 font-mono">
          <time>{{ FormatDuration(playerStore.currentTime) }}</time>
          <!-- <img class="w-full max-w-full invert" src="./images/waveform.png" /> -->
          <AudioWave

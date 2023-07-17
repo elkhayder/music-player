@@ -53,6 +53,7 @@ const Heights = Array(BarsCount)
          }"
       />
    </div>
+   <!-- <img src="/waveform.png" class="max-w-full" /> -->
 </template>
 
 <style lang="scss" scoped></style>

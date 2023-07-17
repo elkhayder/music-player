@@ -31,14 +31,20 @@ export default defineEventHandler(async (event) => {
             spanish: object["Spanish Phrase"].title[0].plain_text,
          };
 
-         const idBase = `${titles.english} - ${titles.spanish}`;
+         const popularity =
+            ["Low", "Medium", "High"].indexOf(
+               object["Popularity"].select?.name
+            ) + 1;
+
+         const idBase = result.id;
 
          const tracks: Drill[] = [];
 
          if (object["FT File"].files.length > 0) {
             tracks.push({
+               popularity,
                titles,
-               id: idBase + "FT",
+               id: idBase + "-FT",
                src: object["FT File"].files[0].file.url,
                type: "FlashTrack",
             });
@@ -46,8 +52,9 @@ export default defineEventHandler(async (event) => {
 
          if (object["LT File"].files.length > 0) {
             tracks.push({
+               popularity,
                titles,
-               id: idBase + "LT",
+               id: idBase + "-LT",
                src: object["LT File"].files[0].file.url,
                type: "LoopTrack",
             });

@@ -1,6 +1,7 @@
 export type DrillType = "FlashTrack" | "LoopTrack";
 
 export type Drill = {
+   plays?: number;
    id: string;
    titles: {
       english: string;
@@ -8,6 +9,8 @@ export type Drill = {
    };
    src: string;
    type: DrillType;
+   popularity: number;
+   isHidden?: boolean;
 };
 
 export type Playlist = {
