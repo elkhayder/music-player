@@ -1,15 +1,27 @@
 <script setup lang="ts">
-const { progress, HeightMax, HeightMin, BarsCount } = withDefaults(
-   defineProps<{
-      progress: number;
-      HeightMin: number;
-      HeightMax: number;
-      BarsCount?: number;
-   }>(),
-   {
-      BarsCount: 40,
-   }
-);
+import { usePlayerStore } from "@/stores/player";
+
+const { progress, HeightMax, HeightMin, BarsCount, isMain } = defineProps<{
+   progress: number;
+   HeightMin: number;
+   HeightMax: number;
+   BarsCount: number;
+   isMain?: boolean;
+}>();
+
+const playerStore = usePlayerStore();
+
+const container = ref<HTMLDivElement | null>(null);
+
+onMounted(() => {
+   isMain &&
+      container.value?.addEventListener("click", (e) => {
+         const sliderWidth = window.getComputedStyle(container.value!).width;
+         const percentageToSeek = e.offsetX / parseFloat(sliderWidth);
+         const newTime = percentageToSeek * playerStore.totalDuration;
+         playerStore.setTime(newTime);
+      });
+});
 
 const Heights = Array(BarsCount)
    .fill(0)
@@ -17,12 +29,18 @@ const Heights = Array(BarsCount)
 </script>
 
 <template>
-   <div class="w-full flex items-center justify-around">
+   <div
+      ref="container"
+      class="w-full flex items-center justify-around"
+      :class="{
+         'cursor-pointer': isMain,
+      }"
+   >
       <span
          v-for="(height, index) of Heights"
-         class="w-1 bg-white rounded-md"
+         class="w-1 bg-white rounded-md pointer-events-none"
          :class="{
-            'bg-blue-400': index / BarsCount < progress,
+            'bg-orange-400': index / BarsCount < progress,
          }"
          :style="{
             height: height + 'px',

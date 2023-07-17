@@ -1,4 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useTracksStore } from "@/stores/tracks";
+import { usePlayerStore } from "@/stores/player";
+import type { Drill } from "utils/types";
+
+const trackStore = useTracksStore();
+const playerStore = usePlayerStore();
+
+const drills = computed(() => trackStore.filteredTracks);
+</script>
 
 <template>
    <section class="p-8">
@@ -16,18 +25,35 @@
          </thead>
          <tbody>
             <tr
-               v-for="track of Array(5).fill(0)"
-               class="border-b bg-gray-800 border-gray-700 hover:bg-gray-600"
+               v-for="drill of drills"
+               class="border-b border-gray-700 hover:bg-gray-500 cursor-pointer"
+               :class="{
+                  'bg-gray-600': drill.id === trackStore.currentTrackID,
+               }"
+               :key="drill.id"
+               @click="() => trackStore.setCurrentTrackID(drill.id)"
             >
                <th scope="row" class="text-center">
                   <!-- font-medium whitespace-nowrap  -->
                   20
                </th>
-               <td class="text-center"><i class="fas fa-play" /></td>
-               <td>FlashCard</td>
+               <td class="text-center">
+                  <i
+                     class="fas"
+                     :class="{
+                        'fa-play':
+                           !playerStore.isPlaying ||
+                           drill.id !== trackStore.currentTrackID,
+                        'fa-pause':
+                           drill.id === trackStore.currentTrackID &&
+                           playerStore.isPlaying,
+                     }"
+                  />
+               </td>
+               <td>{{ drill.type }}</td>
                <td>
-                  <h5 class="text-base">Spanish Title</h5>
-                  <h6 class="text-sm">English Title</h6>
+                  <h5 class="text-base">{{ drill.titles.spanish }}</h5>
+                  <h6 class="text-sm">{{ drill.titles.english }}</h6>
                </td>
                <td>
                   <AudioWave
