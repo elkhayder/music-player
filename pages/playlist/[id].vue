@@ -5,18 +5,14 @@ definePageMeta({
       return Playlists.filter((x) => x.id == route.params.id).length > 0;
    },
 });
-
-const route = useRoute();
-
-const Playlist = Playlists.filter((x) => x.id == route.params.id)[0];
 </script>
 
 <template>
    <section class="grid grid-cols-2 p-8">
-      <PlaylistInfo :playlist="Playlist" />
+      <PlaylistInfo />
       <PlayingTrack />
    </section>
-   <TrackList :drills="Playlist.drills" />
+   <TrackList />
 </template>
 
 <style lang="scss" scoped></style>

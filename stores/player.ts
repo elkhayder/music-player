@@ -48,6 +48,33 @@ export const usePlayerStore = defineStore("player", () => {
       audio.value.addEventListener("timeupdate", () => {
          currentTime.value = audio.value!.currentTime;
       });
+
+      audio.value.addEventListener("keydown", (e) => {
+         if (trackStore.currentTrackID === null || !isLoaded.value) return;
+
+         e.preventDefault();
+         if (e.code === "Space") {
+            togglePlay();
+         } else if (e.code === "ArrowUp") {
+            // Previous Track
+            trackStore.previousTrack();
+         } else if (e.code === "ArrowDown") {
+            // Next Track
+            trackStore.nextTrack();
+         } else if (e.code === "ArrowLeft") {
+            // Seek -2 seconds
+            setRelativeTime(-2);
+         } else if (e.code === "ArrowRight") {
+            // Seek +2 seconds
+            setRelativeTime(2);
+         } else if (e.code === "KeyS") {
+            // Shuffle
+            trackStore.toggleShuffle();
+         } else if (e.code === "KeyR") {
+            // Repeat
+            trackStore.toggleRepeat();
+         }
+      });
    };
 
    const isPlaying = ref(false);
