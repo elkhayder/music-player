@@ -24,7 +24,6 @@ const playerStore = usePlayerStore();
             :HeightMax="70"
             :HeightMin="10"
             :BarsCount="40"
-            :progress="playerStore.currentTime / playerStore.totalDuration"
             :isMain="true"
          />
          <time> {{ FormatDuration(playerStore.totalDuration) }} </time>

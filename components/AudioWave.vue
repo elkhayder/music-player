@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { usePlayerStore } from "@/stores/player";
 
-const { progress, HeightMax, HeightMin, BarsCount, isMain } = defineProps<{
-   progress: number;
+const { HeightMax, HeightMin, BarsCount, isMain } = defineProps<{
    HeightMin: number;
    HeightMax: number;
    BarsCount: number;
@@ -12,6 +11,12 @@ const { progress, HeightMax, HeightMin, BarsCount, isMain } = defineProps<{
 const playerStore = usePlayerStore();
 
 const container = ref<HTMLDivElement | null>(null);
+
+const progress = computed(() => {
+   if (!isMain) return 0;
+
+   return playerStore.currentTime / playerStore.totalDuration;
+});
 
 onMounted(() => {
    isMain &&
@@ -41,7 +46,7 @@ const Heights = Array(BarsCount)
          :key="index"
          class="w-1 bg-white rounded-md pointer-events-none"
          :class="{
-            'bg-orange-400': index / BarsCount < progress,
+            '!bg-orange-400': index / BarsCount < progress,
          }"
          :style="{
             height: height + 'px',

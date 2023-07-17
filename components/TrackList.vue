@@ -56,12 +56,7 @@ const drills = computed(() => trackStore.filteredTracks);
                   <h6 class="text-sm">{{ drill.titles.english }}</h6>
                </td>
                <td>
-                  <AudioWave
-                     :HeightMax="20"
-                     :HeightMin="4"
-                     :progress="0"
-                     :BarsCount="30"
-                  />
+                  <AudioWave :HeightMax="20" :HeightMin="4" :BarsCount="30" />
                   <!-- <time>00:19</time> -->
                </td>
                <td class="text-center"><i class="fas fa-eye" /></td>
@@ -69,32 +64,6 @@ const drills = computed(() => trackStore.filteredTracks);
             </tr>
          </tbody>
       </table>
-      <!-- 
-         <tbody>
-            <tr class="py-4" v-for="track of Array(5).fill(0)">
-               <td class="text-center">10</td>
-               <td class="text-center">
-                  <i class="fas fa-play" />
-               </td>
-               <td class="text-left">FlashCard</td>
-               <td>
-                  <h5 class="text-base">Spanish Title</h5>
-                  <h6 class="text-sm">English Title</h6>
-               </td>
-               <td class="flex items-center gap-2">
-                  <AudioWave
-                     :HeightMax="20"
-                     :HeightMin="4"
-                     :progress="0"
-                     :BarsCount="15"
-                  />
-                  <time>00:19</time>
-               </td>
-               <td><i class="fas fa-eye" /></td>
-               <td><i class="fas fa-signal-3" /></td>
-            </tr>
-         </tbody>
-      </table> -->
    </section>
 </template>
 
