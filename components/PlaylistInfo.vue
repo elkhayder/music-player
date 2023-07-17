@@ -6,16 +6,19 @@ const playlist = computed(() => trackStore.playlist);
 </script>
 
 <template>
-   <div class="flex items-center gap-8">
+   <div class="flex items-center gap-4 md:gap-8 max-md:w-full">
       <img
          src="https://cdns-images.dzcdn.net/images/cover/069a5dba671436da9301aad36fc9a983/500x500.jpg"
          alt="The College Dropout"
-         width="200"
-         height="200"
+         class="w-32 h-32 md:w-48 md:h-48"
       />
       <div>
-         <h2 class="text-4xl font-semibold mb-2">{{ playlist.title }}</h2>
-         <h4 class="mb-8">{{ playlist.drills.length }} Audio Drills</h4>
+         <h2 class="text-xl md:text-4xl font-semibold mb-2">
+            {{ playlist.title }}
+         </h2>
+         <h4 class="text-xs md:text-base mb-4 md:mb-8">
+            {{ playlist.drills.length }} Audio Drills
+         </h4>
          <div>
             <label
                for="filter"

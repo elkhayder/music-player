@@ -10,7 +10,7 @@ const drills = computed(() => trackStore.filteredTracks);
 </script>
 
 <template>
-   <section class="p-8">
+   <section class="w-full p-8 overflow-x-auto">
       <table class="w-full text-sm text-left text-white">
          <thead class="text-xs uppercase bg-gray-700 text-gray-400">
             <tr>

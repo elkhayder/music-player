@@ -8,7 +8,7 @@ definePageMeta({
 </script>
 
 <template>
-   <section class="grid grid-cols-2 p-8">
+   <section class="flex max-md:flex-col items-center justify-between p-8 gap-8">
       <PlaylistInfo />
       <PlayingTrack />
    </section>
