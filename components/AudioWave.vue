@@ -38,6 +38,7 @@ const Heights = Array(BarsCount)
    >
       <span
          v-for="(height, index) of Heights"
+         :key="index"
          class="w-1 bg-white rounded-md pointer-events-none"
          :class="{
             'bg-orange-400': index / BarsCount < progress,
