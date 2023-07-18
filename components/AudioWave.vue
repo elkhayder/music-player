@@ -6,6 +6,7 @@ const { HeightMax, HeightMin, BarsCount, isMain } = defineProps<{
    HeightMax: number;
    BarsCount: number;
    isMain?: boolean;
+   muted?: boolean;
 }>();
 
 const playerStore = usePlayerStore();
@@ -46,6 +47,7 @@ const Heights = Array(BarsCount)
          :key="index"
          class="w-1 bg-white rounded-md pointer-events-none"
          :class="{
+            '!bg-gray-400': muted,
             '!bg-[#4FABA8]': index / BarsCount < progress,
          }"
          :style="{

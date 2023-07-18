@@ -51,7 +51,12 @@ const onCLick = computed(() => {
          <h6 class="text-sm">{{ drill.titles.english }}</h6>
       </td>
       <td>
-         <AudioWave :HeightMax="20" :HeightMin="4" :BarsCount="30" />
+         <AudioWave
+            :HeightMax="20"
+            :HeightMin="4"
+            :BarsCount="30"
+            :muted="drill.isHidden"
+         />
          <!-- <time>00:19</time> -->
       </td>
       <td
