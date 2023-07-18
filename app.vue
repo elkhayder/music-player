@@ -17,6 +17,10 @@
       rel="stylesheet"
    />
    <Body class="bg-gray-800 text-white accent-[#4FABA8]">
+      <!-- Built by @elkhayder -->
+      <!-- Portfolio: https://zelkhayder.me -->
+      <!-- Github: @elkhayder -->
+      <!-- Linkedin: @elkhayderzakaria -->
       <NuxtPage />
    </Body>
 </template>

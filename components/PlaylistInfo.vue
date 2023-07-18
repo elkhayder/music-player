@@ -8,10 +8,11 @@ const playlist = computed(() => trackStore.playlist);
 <template>
    <div class="flex items-center gap-4 md:gap-8 max-md:w-full">
       <img
-         src="https://cdns-images.dzcdn.net/images/cover/069a5dba671436da9301aad36fc9a983/500x500.jpg"
-         alt="The College Dropout"
-         class="w-32 h-32 md:w-48 md:h-48"
+         src="/logo.png"
+         alt="Spanish Audio Drills Logo"
+         class="h-32 md:h-48"
       />
+      <!-- w-32 md:w-48 -->
       <div>
          <h2 class="text-xl md:text-4xl font-semibold mb-2">
             {{ playlist.title }}
