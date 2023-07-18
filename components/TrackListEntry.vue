@@ -55,8 +55,7 @@ const onCLick = computed(() => {
             :HeightMax="20"
             :HeightMin="4"
             :BarsCount="30"
-            :muted="drill.isHidden"
-            :key="`${drill.id}-audioWave`"
+            :muted="drill.isHidden ?? false"
          />
          <!-- <time>00:19</time> -->
       </td>
