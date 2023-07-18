@@ -25,6 +25,24 @@ export const useTracksStore = defineStore("tracks", () => {
       });
    };
 
+   const currentTrackID = ref<string | null>(null);
+   const setCurrentTrackID = (id: string) => {
+      currentTrackID.value = id;
+      playerStore.setAudioSrc(currentTrack.value!.src);
+
+      // Increase plays count
+      const newCount = ++playlist.drills.find((x) => x.id === id)!.plays!;
+      localStorage.setItem(id, newCount.toString());
+   };
+
+   onMounted(() => {
+      setCurrentTrackID(playlist.drills[0].id);
+   });
+
+   const currentTrack = computed(
+      () => playlist.drills.find((x) => x.id === currentTrackID.value) ?? null
+   );
+
    const toggleIsHidden = (id: string) => {
       const drill = playlist.drills.find((x) => x.id === id);
       if (!drill) return;
@@ -43,23 +61,39 @@ export const useTracksStore = defineStore("tracks", () => {
       )
    );
 
-   const nonHiddenTracks = computed(() =>
-      filteredTracks.value.filter((x) => !x.isHidden)
-   );
+   const sortBy = ref<
+      | "Popularity-ASC"
+      | "Popularity-DESC"
+      | "isHidden-ASC"
+      | "isHidden-DESC"
+      | null
+   >(null);
 
-   const currentTrackID = ref<string | null>(null);
-   const setCurrentTrackID = (id: string) => {
-      currentTrackID.value = id;
-      playerStore.setAudioSrc(currentTrack.value!.src);
-
-      // Increase plays count
-      const newCount = ++playlist.drills.find((x) => x.id === id)!.plays!;
-      localStorage.setItem(id, newCount.toString());
+   const setSortBy = (type: typeof sortBy.value) => {
+      sortBy.value = type;
    };
 
-   const currentTrack = computed(
-      () => playlist.drills.find((x) => x.id === currentTrackID.value) ?? null
-   );
+   const sortedTracks = computed(() => {
+      if (!sortBy.value) return filteredTracks.value;
+      switch (sortBy.value) {
+         case "Popularity-ASC":
+            return filteredTracks.value.sort(
+               (a, b) => a.popularity - b.popularity
+            );
+         case "Popularity-DESC":
+            return filteredTracks.value.sort(
+               (a, b) => b.popularity - a.popularity
+            );
+         case "isHidden-ASC":
+            return filteredTracks.value.sort((a, b) =>
+               a.isHidden === b.isHidden ? 0 : a.isHidden ? -1 : 1
+            );
+         case "isHidden-DESC":
+            return filteredTracks.value.sort((a, b) =>
+               a.isHidden === b.isHidden ? 0 : a.isHidden ? 1 : -1
+            );
+      }
+   });
 
    const isShuffled = ref(false);
    const toggleShuffle = () => {
@@ -90,7 +124,7 @@ export const useTracksStore = defineStore("tracks", () => {
             (currentTrackIndex + indexOffset) % filteredTracks.value.length;
       }
 
-      const nextTrack = filteredTracks.value.at(newIndex);
+      const nextTrack = sortedTracks.value.at(newIndex);
 
       if (nextTrack?.isHidden) {
          setRelativeTrack(Math.sign(indexOffset) * (Math.abs(indexOffset) + 1));
@@ -116,5 +150,8 @@ export const useTracksStore = defineStore("tracks", () => {
       nextTrack,
       previousTrack,
       toggleIsHidden,
+      sortBy,
+      setSortBy,
+      sortedTracks,
    };
 });

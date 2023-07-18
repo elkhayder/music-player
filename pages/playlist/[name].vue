@@ -28,6 +28,7 @@ if (data.value) {
 <template>
    <Title>{{ route.params.name }} — Spanish Audio Drills</Title>
    <main class="max-w-6xl mx-auto">
+      <audio class="hidden" crossorigin="anonymous" id="audio-player" />
       <section
          class="flex max-md:flex-col items-center justify-between p-8 gap-8"
       >

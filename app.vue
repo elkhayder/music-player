@@ -6,13 +6,17 @@
    />
    <!-- Google Fonts -->
    <Link rel="preconnect" href="https://fonts.googleapis.com" />
-   <Link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+   <Link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin="anonymous"
+   />
    <!-- Poppins -->
    <Link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
       rel="stylesheet"
    />
-   <Body class="bg-gray-800 text-white">
+   <Body class="bg-gray-800 text-white accent-[#4FABA8]">
       <NuxtPage />
    </Body>
 </template>

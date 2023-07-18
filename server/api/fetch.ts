@@ -21,9 +21,11 @@ export default defineEventHandler(async (event) => {
       },
    });
 
+   type DrillWithNumber = Drill & { number: number };
+
    // return results;
    return results
-      .map((result: any): Drill[] => {
+      .map((result: any): DrillWithNumber[] => {
          const object = result.properties;
 
          const titles = {
@@ -36,12 +38,15 @@ export default defineEventHandler(async (event) => {
                object["Popularity"].select?.name
             ) + 1;
 
+         const number = object["Phrase/Word #"].number;
+
          const idBase = result.id;
 
-         const tracks: Drill[] = [];
+         const tracks: DrillWithNumber[] = [];
 
          if (object["FT File"].files.length > 0) {
             tracks.push({
+               number,
                popularity,
                titles,
                id: idBase + "-FT",
@@ -52,6 +57,7 @@ export default defineEventHandler(async (event) => {
 
          if (object["LT File"].files.length > 0) {
             tracks.push({
+               number,
                popularity,
                titles,
                id: idBase + "-LT",
@@ -62,5 +68,6 @@ export default defineEventHandler(async (event) => {
 
          return tracks;
       })
-      .flat();
+      .flat()
+      .sort((a, b) => a.number - b.number);
 });

@@ -6,12 +6,14 @@ export const usePlayerStore = defineStore("player", () => {
    const context = ref<AudioContext | null>(null);
    const audio = ref<HTMLAudioElement | null>(null);
 
+   var isAutoLoaded = true;
+
    const Setup = () => {
-      context.value = new AudioContext();
-      audio.value = new Audio();
-      audio.value.crossOrigin = "anonymous";
-      const source = context.value.createMediaElementSource(audio.value);
-      source.connect(context.value.destination);
+      // context.value = new AudioContext();
+      audio.value = document.getElementById("audio-player") as HTMLAudioElement;
+      // audio.value.crossOrigin = "anonymous";
+      // const source = context.value.createMediaElementSource(audio.value);
+      // source.connect(context.value.destination);
 
       audio.value.addEventListener("ended", () => {
          isPlaying.value = false;
@@ -42,7 +44,12 @@ export const usePlayerStore = defineStore("player", () => {
       audio.value.addEventListener("loadeddata", () => {
          isLoaded.value = true;
 
-         audio.value!.play();
+         if (!isAutoLoaded) {
+            audio.value!.play();
+         } else {
+            isAutoLoaded = false;
+         }
+
          totalDuration.value = audio.value!.duration;
       });
 

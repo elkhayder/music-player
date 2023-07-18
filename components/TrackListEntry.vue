@@ -21,8 +21,9 @@ const onCLick = computed(() => {
    <tr
       class="border-b border-gray-700 hover:bg-gray-500 cursor-pointer"
       :class="{
-         'bg-gray-600': drill.id === trackStore.currentTrackID,
-         'text-gray-400 cursor-not-allowed': drill.isHidden,
+         'bg-zinc-800': drill.type == 'LoopTrack',
+         '!bg-gray-600': drill.id === trackStore.currentTrackID,
+         '!text-gray-400 cursor-not-allowed': drill.isHidden,
       }"
       :key="drill.id"
       @click="onCLick"
@@ -57,7 +58,6 @@ const onCLick = computed(() => {
          class="text-center !cursor-pointer"
          @click="
             (e) => {
-               console.log('CLicked');
                e.preventDefault();
                e.stopPropagation();
                drill.isHidden = !drill.isHidden;
