@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-   devtools: { enabled: true },
+   // devtools: { enabled: true },
    postcss: {
       plugins: {
          tailwindcss: {},
@@ -8,4 +8,12 @@ export default defineNuxtConfig({
       },
    },
    modules: ["@pinia/nuxt"],
+   nitro: {
+      serverAssets: [
+         {
+            baseName: "audio",
+            dir: "./audio", // Relative to `srcDir` (`server/` for nuxt)
+         },
+      ],
+   },
 });

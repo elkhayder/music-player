@@ -53,6 +53,12 @@ if (data.value) {
       </section>
       <TrackList />
    </main>
+   <footer class="text-center font-mono font-normal p-4 mb-2 text-gray-400">
+      Created with ❤️ by
+      <a href="https://zelkhayder.me" target="_blank" class="underline">
+         @elkhayder
+      </a>
+   </footer>
 </template>
 
 <style lang="scss" scoped></style>
