@@ -1,19 +1,14 @@
-export type DrillType = "FlashTrack" | "LoopTrack";
-
-export type Drill = {
-   plays?: number;
-   id: string;
-   titles: {
-      english: string;
-      spanish: string;
-   };
-   src: string;
-   type: DrillType;
-   popularity: number;
-   isHidden?: boolean;
+export type Album = {
+   slug: string;
+   title: string;
+   cover: string;
+   tracks: Track[];
+   artist: string;
 };
 
-export type Playlist = {
+export type Track = {
    title: string;
-   drills: Drill[];
+   artists: string[];
+   duration: number;
+   src: string;
 };

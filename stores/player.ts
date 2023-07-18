@@ -19,7 +19,7 @@ export const usePlayerStore = defineStore("player", () => {
          isPlaying.value = false;
          currentTime.value = 0;
          if (trackStore.isOnRepeat) {
-            trackStore.setCurrentTrackID(trackStore.currentTrackID!);
+            trackStore.setCurrentTrackIndex(trackStore.currentTrackIndex!);
          } else {
             trackStore.nextTrack();
          }
@@ -57,32 +57,44 @@ export const usePlayerStore = defineStore("player", () => {
          currentTime.value = audio.value!.currentTime;
       });
 
-      audio.value.addEventListener("keydown", (e) => {
-         if (trackStore.currentTrackID === null || !isLoaded.value) return;
+      // window.addEventListener("keydown", (e) => {
+      //    if (trackStore.currentTrackIndex === null || !isLoaded.value) return;
 
-         e.preventDefault();
-         if (e.code === "Space") {
-            togglePlay();
-         } else if (e.code === "ArrowUp") {
-            // Previous Track
-            trackStore.previousTrack();
-         } else if (e.code === "ArrowDown") {
-            // Next Track
-            trackStore.nextTrack();
-         } else if (e.code === "ArrowLeft") {
-            // Seek -2 seconds
-            setRelativeTime(-2);
-         } else if (e.code === "ArrowRight") {
-            // Seek +2 seconds
-            setRelativeTime(2);
-         } else if (e.code === "KeyS") {
-            // Shuffle
-            trackStore.toggleShuffle();
-         } else if (e.code === "KeyR") {
-            // Repeat
-            trackStore.toggleRepeat();
-         }
-      });
+      //    const Handlers = [
+      //       {
+      //          key: "Space",
+      //          handler: togglePlay,
+      //       },
+      //       {
+      //          key: "ArrowUp",
+      //          handler: trackStore.previousTrack,
+      //       },
+      //       {
+      //          key: "ArrowDown",
+      //          handler: trackStore.nextTrack,
+      //       },
+      //       {
+      //          key: "ArrowLeft",
+      //          handler: () => setRelativeTime(-2),
+      //       },
+      //       {
+      //          key: "ArrowRight",
+      //          handler: () => setRelativeTime(2),
+      //       },
+      //       {
+      //          key: "KeyS",
+      //          handler: trackStore.toggleShuffle,
+      //       },
+      //       {
+      //          key: "KeyR",
+      //          handler: trackStore.toggleRepeat,
+      //       },
+      //    ];
+
+      //    if (Handlers.findIndex((x) => x.key == e.code) === -1) return;
+
+      //    Handlers.find((x) => x.key == e.code)!.handler();
+      // });
    };
 
    const isPlaying = ref(false);

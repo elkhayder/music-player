@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { Drill } from "@/utils/types";
+import { Track } from "@/utils/types";
 import { usePlayerStore } from "@/stores/player";
 import { useTracksStore } from "@/stores/tracks";
+import { FormatDuration } from "@/utils/duration";
 
-const { drill } = defineProps<{ drill: Drill }>();
+const { track, index } = defineProps<{ track: Track; index: number }>();
 
 const trackStore = useTracksStore();
 const playerStore = usePlayerStore();
 
 const onCLick = computed(() => {
-   if (drill.isHidden) return;
-
-   return drill.id == trackStore.currentTrackID
+   return index == trackStore.currentTrackIndex
       ? playerStore.togglePlay
-      : () => trackStore.setCurrentTrackID(drill.id);
+      : () => trackStore.setCurrentTrackIndex(index);
 });
 </script>
 
@@ -21,63 +20,37 @@ const onCLick = computed(() => {
    <tr
       class="border-b border-gray-700 hover:bg-gray-500 cursor-pointer"
       :class="{
-         'bg-zinc-800': drill.type == 'LoopTrack',
-         '!bg-gray-600': drill.id === trackStore.currentTrackID,
-         '!text-gray-400 cursor-not-allowed': drill.isHidden,
+         '!bg-gray-600': index == trackStore.currentTrackIndex,
       }"
-      :key="drill.id"
       @click="onCLick"
    >
-      <th scope="row" class="text-center">
+      <th scope="row" class="text-center text-gray-400">
          <!-- font-medium whitespace-nowrap  -->
-         {{ drill.plays ?? "-" }}
+         {{ index + 1 }}
       </th>
-      <td class="text-center">
+      <td class="text-center text-xs">
          <i
             class="fas"
             :class="{
                'fa-play':
                   !playerStore.isPlaying ||
-                  drill.id !== trackStore.currentTrackID,
+                  index !== trackStore.currentTrackIndex,
                'fa-pause':
-                  drill.id === trackStore.currentTrackID &&
+                  index === trackStore.currentTrackIndex &&
                   playerStore.isPlaying,
             }"
          />
       </td>
-      <td>{{ drill.type }}</td>
       <td>
-         <h5 class="text-base">{{ drill.titles.spanish }}</h5>
-         <h6 class="text-sm">{{ drill.titles.english }}</h6>
+         <h5 class="font-semibold">{{ track.title }}</h5>
       </td>
       <td>
-         <AudioWave
-            :HeightMax="20"
-            :HeightMin="4"
-            :BarsCount="30"
-            :muted="drill.isHidden ?? false"
-         />
+         {{ track.artists.join(" • ") }}
          <!-- <time>00:19</time> -->
       </td>
-      <td
-         class="text-center !cursor-pointer"
-         @click="
-            (e) => {
-               e.preventDefault();
-               e.stopPropagation();
-               drill.isHidden = !drill.isHidden;
-               //    trackStore.toggleIsHidden(drill.id);
-            }
-         "
-      >
-         <i class="fas fa-eye" />
-      </td>
-      <td class="text-center">
-         <i
-            :class="`fas fa-signal${
-               drill.popularity < 3 ? '-' + (drill.popularity + 2) : ''
-            }`"
-         />
+
+      <td class="text-right font-mono">
+         {{ FormatDuration(track.duration) }}
       </td>
    </tr>
 </template>

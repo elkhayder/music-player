@@ -5,3 +5,18 @@ export const FormatDuration = (seconds: number) => {
       .toString()
       .padStart(2, "0")}`;
 };
+
+export const FormatDurationString = (seconds: number) => {
+   const hours = Math.floor(seconds / 3600);
+   const minutes = Math.floor((seconds % 3600) / 60);
+   const remainingSeconds = seconds % 60;
+
+   var result = "";
+   if (hours > 0) {
+      result += `${hours}h `;
+   }
+   result += `${minutes.toString().padStart(2, "0")}m `;
+   result += `${remainingSeconds.toString().padStart(2, "0")}s`;
+
+   return result;
+};

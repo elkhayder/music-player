@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { FormatDuration } from "@/utils/duration";
 import { usePlayerStore } from "../stores/player";
 import { useTracksStore } from "../stores/tracks";
 
@@ -13,16 +14,13 @@ const playerStore = usePlayerStore();
       v-if="track"
       class="flex-1 w-full max-w-md flex flex-col justify-center"
    >
-      <div class="flex items-center justify-between">
-         <div>
-            <h4 class="text-xl md:text-2xl font-bold">
-               {{ track.titles.spanish }}
-            </h4>
-            <h6 class="text-xs md:text-base mt-1 font-medium">
-               {{ track.titles.english }}
-            </h6>
-         </div>
-         <h2 class="text-xs md:text-base">{{ track.type }}</h2>
+      <div>
+         <h4 class="text-xl md:text-2xl font-bold">
+            {{ track.title }}
+         </h4>
+         <h6 class="text-xs md:text-base mt-1 font-medium">
+            {{ track.artists.join(" • ") }}
+         </h6>
       </div>
       <div class="mt-6 flex items-center gap-4 font-mono">
          <time>{{ FormatDuration(playerStore.currentTime) }}</time>
