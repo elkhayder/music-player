@@ -37,6 +37,7 @@ const playerStore = usePlayerStore();
          <i
             class="fas fa-volume-mute cursor-pointer"
             @click="() => playerStore.setVolume(0)"
+            title="Mute"
          />
          <input
             class="w-full"
@@ -45,24 +46,33 @@ const playerStore = usePlayerStore();
             max="100"
             :value="playerStore.volume * 100"
             @input="(e) => playerStore.setVolume((e.target as any).value / 100)"
+            title="Volume"
          />
          <i
             class="fas fa-volume cursor-pointer"
             @click="() => playerStore.setVolume(1)"
+            title="Max Volume"
          />
       </div>
       <div class="mt-8 flex items-center justify-around [&>*]:cursor-pointer">
+         <i
+            class="far fa-redo"
+            @click="() => playerStore.setRelativeTime(2)"
+            title="Fast Forward 2s"
+         />
          <i
             class="far fa-random"
             :class="{
                'text-orange-400': trackStore.isShuffled,
             }"
             @click="trackStore.toggleShuffle"
+            title="Shuffle"
          />
          <i class="fas fa-backward" @click="trackStore.previousTrack" />
          <div
             class="bg-white w-10 h-10 rounded-full flex items-center justify-center text-black"
             @click="playerStore.togglePlay"
+            title="Play/Pause"
          >
             <!-- pl-0.5 -->
             <i
@@ -81,10 +91,12 @@ const playerStore = usePlayerStore();
                'text-orange-400': trackStore.isOnRepeat,
             }"
             @click="trackStore.toggleRepeat"
+            title="Repeat"
          />
          <i
             class="far fa-redo fa-flip-horizontal"
             @click="() => playerStore.setRelativeTime(-2)"
+            title="Rewind 2s"
          />
       </div>
    </div>

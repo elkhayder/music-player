@@ -9,7 +9,7 @@ const tracks = computed(() => trackStore.album!.tracks);
 </script>
 
 <template>
-   <section class="w-full p-8 overflow-x-auto">
+   <section class="w-full p-8 overflow-x-auto overflow-y-auto">
       <table class="w-full text-sm text-left text-white">
          <thead class="text-xs uppercase bg-gray-700 text-gray-400 select-none">
             <tr>

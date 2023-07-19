@@ -43,8 +43,7 @@ if (data.value) {
 
 <template>
    <Title>{{ trackStore.album?.title }} — Music Player — zelkhayder.me</Title>
-   <main class="max-w-6xl mx-auto">
-      <audio class="hidden" crossorigin="anonymous" id="audio-player" />
+   <main class="max-w-6xl mx-auto relative">
       <section
          class="flex max-md:flex-col items-center justify-between p-8 gap-8"
       >
@@ -59,6 +58,7 @@ if (data.value) {
          @elkhayder
       </a>
    </footer>
+   <audio class="hidden" crossorigin="anonymous" id="audio-player" />
 </template>
 
 <style lang="scss" scoped></style>
