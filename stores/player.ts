@@ -8,12 +8,21 @@ export const usePlayerStore = defineStore("player", () => {
 
    var isAutoLoaded = true;
 
+   const bufferLength = ref(0);
+   const dataArray = ref<Uint8Array | null>(null);
+   const analyser = ref<AnalyserNode | null>(null);
+
    const Setup = () => {
       // context.value = new AudioContext();
       audio.value = document.getElementById("audio-player") as HTMLAudioElement;
-      // audio.value.crossOrigin = "anonymous";
       // const source = context.value.createMediaElementSource(audio.value);
-      // source.connect(context.value.destination);
+      // analyser.value = context.value!.createAnalyser();
+      // source.connect(analyser.value);
+
+      // analyser.value.connect(context.value.destination);
+      // analyser.value.fftSize = 256;
+      // bufferLength.value = analyser.value.frequencyBinCount;
+      // dataArray.value = new Uint8Array(bufferLength.value);
 
       audio.value.addEventListener("ended", () => {
          isPlaying.value = false;
@@ -148,5 +157,9 @@ export const usePlayerStore = defineStore("player", () => {
       totalDuration,
       setTime,
       setRelativeTime,
+      // Visualizer
+      bufferLength,
+      dataArray,
+      analyser,
    };
 });
