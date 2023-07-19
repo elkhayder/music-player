@@ -48,7 +48,7 @@ const Heights = Array(BarsCount)
          class="w-1 bg-white rounded-md pointer-events-none"
          :class="{
             '!bg-gray-400': muted,
-            '!bg-[#4FABA8]': index / BarsCount < progress,
+            '!bg-orange-400': index / BarsCount < progress,
          }"
          :style="{
             height: height + 'px',

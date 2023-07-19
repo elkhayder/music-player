@@ -16,7 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
       rel="stylesheet"
    />
-   <Body class="bg-gray-800 text-white accent-[#4FABA8]">
+   <Body class="bg-gray-800 text-white accent-orange-500">
       <!-- Built by @elkhayder -->
       <!-- Portfolio: https://zelkhayder.me -->
       <!-- Github: @elkhayder -->
