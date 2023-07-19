@@ -2,28 +2,8 @@
 import { Album } from "@/utils/types";
 import { useTracksStore } from "@/stores/tracks";
 
-// definePageMeta({
-
-// });
-
 const route = useRoute();
 const trackStore = useTracksStore();
-
-// const { data, pending, error, refresh } = useAsyncData("playlist", () =>
-//    $fetch("/api/fetch", {
-//       query: {
-//          playlist: route.params.name,
-//       },
-//    })
-// );
-
-// if (error.value) {
-//    console.log("Error", error.value);
-// } else if (data.value) {
-//    console.log("Data", data);
-
-//    trackStore.setAlbum(data as any);
-// }
 
 const { data } = await useFetch<Album>("/api/fetch", {
    query: {
@@ -42,7 +22,7 @@ if (data.value) {
 </script>
 
 <template>
-   <Title>{{ trackStore.album?.title }} — Music Player — zelkhayder.me</Title>
+   <Title>{{ trackStore.album!.title }} — Music Player — zelkhayder.me</Title>
    <main class="max-w-6xl mx-auto relative">
       <section
          class="flex max-md:flex-col items-center justify-between p-8 gap-8"
@@ -52,7 +32,9 @@ if (data.value) {
       </section>
       <TrackList />
    </main>
-   <footer class="text-center font-mono font-normal p-4 mb-2 text-gray-400">
+   <footer
+      class="text-sm text-center font-mono font-normal p-4 mb-2 text-gray-400"
+   >
       Created with ❤️ by
       <a href="https://zelkhayder.me" target="_blank" class="underline">
          @elkhayder
