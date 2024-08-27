@@ -7,6 +7,19 @@ const trackStore = useTracksStore();
 const track = computed(() => trackStore.currentTrack);
 
 const playerStore = usePlayerStore();
+
+onMounted(() => {
+   navigator.mediaSession.setActionHandler("pause", playerStore.togglePlay);
+   navigator.mediaSession.setActionHandler("play", playerStore.togglePlay);
+
+   // Handle next/previous track actions
+   navigator.mediaSession.setActionHandler(
+      "previoustrack",
+      trackStore.previousTrack
+   );
+
+   navigator.mediaSession.setActionHandler("nexttrack", trackStore.nextTrack);
+});
 </script>
 
 <template>

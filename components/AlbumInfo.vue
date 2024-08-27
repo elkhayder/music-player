@@ -4,6 +4,24 @@ import { useTracksStore } from "../stores/tracks";
 
 const trackStore = useTracksStore();
 const album = computed(() => trackStore.album);
+
+watchEffect(() => {
+   if (process.client)
+      navigator.mediaSession.metadata = new MediaMetadata({
+         title: trackStore.currentTrack?.title,
+         artist:
+            trackStore.currentTrack?.artists.join(", ") ??
+            trackStore.album?.artist,
+         album: trackStore.album?.title,
+         artwork: [
+            {
+               src: `/cover/${album.value!.cover}`,
+               sizes: "640x640",
+               type: "image/jpeg",
+            },
+         ],
+      });
+});
 </script>
 
 <template>
