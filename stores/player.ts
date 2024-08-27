@@ -64,6 +64,17 @@ export const usePlayerStore = defineStore("player", () => {
 
       audio.value.addEventListener("timeupdate", () => {
          currentTime.value = audio.value!.currentTime;
+
+         // Update media session
+         navigator.mediaSession.setPositionState({
+            position: audio.value!.currentTime,
+            duration: audio.value!.duration,
+            playbackRate: 1,
+         });
+      });
+
+      navigator.mediaSession.setActionHandler("seekto", (details) => {
+         if (details.seekTime) setTime(details.seekTime);
       });
 
       // window.addEventListener("keydown", (e) => {
