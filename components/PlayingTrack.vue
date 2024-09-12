@@ -20,6 +20,8 @@ onMounted(() => {
 
    navigator.mediaSession.setActionHandler("nexttrack", trackStore.nextTrack);
 });
+
+const device = useDevice();
 </script>
 
 <template>
@@ -41,7 +43,7 @@ onMounted(() => {
          <AudioWave
             :HeightMax="70"
             :HeightMin="10"
-            :BarsCount="40"
+            :BarsCount="device.isMobile ? 20 : 40"
             :isMain="true"
          />
          <!-- <AudioVisualizer /> -->

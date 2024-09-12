@@ -7,7 +7,9 @@ export default defineNuxtConfig({
          autoprefixer: {},
       },
    },
-   modules: ["@pinia/nuxt"],
+
+   modules: ["@pinia/nuxt", "@nuxtjs/device"],
+
    nitro: {
       serverAssets: [
          {
@@ -16,4 +18,6 @@ export default defineNuxtConfig({
          },
       ],
    },
+
+   compatibilityDate: "2024-09-12",
 });

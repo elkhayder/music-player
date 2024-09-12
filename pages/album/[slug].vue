@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Album } from "@/utils/types";
+import type { Album } from "@/utils/types";
 import { useTracksStore } from "@/stores/tracks";
 
 const route = useRoute();

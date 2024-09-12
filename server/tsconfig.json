@@ -1,4 +1,7 @@
 {
    "extends": "../.nuxt/tsconfig.server.json",
-   "esModuleInterop": true
+
+   "compilerOptions": {
+      "esModuleInterop": true
+   }
 }
