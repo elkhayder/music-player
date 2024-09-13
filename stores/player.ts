@@ -53,11 +53,12 @@ export const usePlayerStore = defineStore("player", () => {
          currentTime.value = audio.value!.currentTime;
 
          // Update media session
-         navigator.mediaSession.setPositionState({
-            position: audio.value!.currentTime,
-            duration: audio.value!.duration,
-            playbackRate: 1,
-         });
+         if (!Number.isNaN(audio.value!.duration))
+            navigator.mediaSession.setPositionState({
+               position: audio.value!.currentTime,
+               duration: audio.value!.duration,
+               playbackRate: 1,
+            });
       });
 
       navigator.mediaSession.setActionHandler("seekto", (details) => {

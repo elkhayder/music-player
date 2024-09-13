@@ -1,5 +1,8 @@
 <template>
-   <component :is="device.isMobile ? Mobile : Desktop" v-bind="$props" />
+   <component
+      :is="device.isMobile ? Mobile : Desktop"
+      v-bind="($props as any)"
+   />
 </template>
 
 <script lang="ts" setup>

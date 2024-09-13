@@ -43,7 +43,7 @@ const device = useDevice();
          <AudioWave
             :HeightMax="70"
             :HeightMin="10"
-            :BarsCount="device.isMobile ? 20 : 40"
+            :BarsCount="device.isMobile ? 25 : 40"
             :isMain="true"
          />
          <time> {{ FormatDuration(playerStore.totalDuration) }} </time>

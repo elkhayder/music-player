@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { usePlayerStore } from "@/stores/player";
+import WaveformData from "waveform-data";
 
 const { HeightMax, HeightMin, BarsCount } = defineProps<{
    HeightMin: number;
@@ -9,12 +10,51 @@ const { HeightMax, HeightMin, BarsCount } = defineProps<{
 }>();
 
 const playerStore = usePlayerStore();
+const tracksStore = useTracksStore();
 
 const container = ref<HTMLDivElement | null>(null);
 
 const progress = computed(() => {
    return playerStore.currentTime / playerStore.totalDuration;
 });
+
+const updateBars = () => {
+   if (!tracksStore.currentTrack.waveform)
+      Heights.value = Array(BarsCount)
+         .fill(0)
+         .map(() =>
+            Math.floor(Math.random() * (HeightMax - HeightMin) + HeightMin)
+         );
+   else
+      fetch(tracksStore.currentTrack.waveform)
+         .then((response) => response.arrayBuffer())
+         .then((buffer) => WaveformData.create(buffer))
+         .then((waveform) => waveform.resample({ width: BarsCount }))
+         .then((waveform) => {
+            const channel = waveform.channel(0);
+
+            let data = [];
+            let max = 0;
+
+            for (let i = 0; i < waveform.length; i++) {
+               // height
+               let value = Math.abs(
+                  channel.max_sample(i) - channel.min_sample(i)
+               );
+
+               data[i] = value;
+
+               if (value > max) max = value;
+            }
+
+            for (let i = 0; i < waveform.length; i++) {
+               data[i] /= max; // standarize
+               data[i] *= HeightMax; // scale
+            }
+
+            Heights.value = data;
+         });
+};
 
 onMounted(() => {
    container.value?.addEventListener("click", (e) => {
@@ -23,11 +63,13 @@ onMounted(() => {
       const newTime = percentageToSeek * playerStore.totalDuration;
       playerStore.setTime(newTime);
    });
+
+   updateBars();
 });
 
-const Heights = Array(BarsCount)
-   .fill(0)
-   .map(() => Math.floor(Math.random() * (HeightMax - HeightMin) + HeightMin));
+watch(() => tracksStore.currentTrack, updateBars);
+
+const Heights = ref<Array<number>>([]);
 </script>
 
 <template>
@@ -45,7 +87,6 @@ const Heights = Array(BarsCount)
          }"
       />
    </div>
-   <!-- <img src="/waveform.png" class="max-w-full" /> -->
 </template>
 
 <style lang="scss" scoped></style>

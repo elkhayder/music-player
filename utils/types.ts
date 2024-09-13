@@ -11,4 +11,5 @@ export type Track = {
    artists: string[];
    duration: number;
    src: string;
+   waveform: string;
 };
