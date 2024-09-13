@@ -46,7 +46,6 @@ const device = useDevice();
             :BarsCount="device.isMobile ? 20 : 40"
             :isMain="true"
          />
-         <!-- <AudioVisualizer /> -->
          <time> {{ FormatDuration(playerStore.totalDuration) }} </time>
       </div>
       <div class="mt-6 flex items-center gap-4">

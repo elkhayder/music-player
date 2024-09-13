@@ -1,5 +1,3 @@
-import * as fs from "fs";
-import * as path from "path";
 import Albums from "../utils/db";
 
 export default defineEventHandler(async (event) => {

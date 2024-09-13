@@ -5,7 +5,7 @@ import { useTracksStore } from "@/stores/tracks";
 const route = useRoute();
 const trackStore = useTracksStore();
 
-const { data } = await useFetch<Album>("/api/fetch", {
+const { data } = await useFetch<Album>("/api/album", {
    query: {
       album: route.params.slug,
    },

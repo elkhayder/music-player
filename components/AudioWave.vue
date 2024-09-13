@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { usePlayerStore } from "@/stores/player";
 
-const { HeightMax, HeightMin, BarsCount, isMain } = defineProps<{
+const { HeightMax, HeightMin, BarsCount } = defineProps<{
    HeightMin: number;
    HeightMax: number;
    BarsCount: number;
-   isMain?: boolean;
    muted?: boolean;
 }>();
 
@@ -14,19 +13,16 @@ const playerStore = usePlayerStore();
 const container = ref<HTMLDivElement | null>(null);
 
 const progress = computed(() => {
-   if (!isMain) return 0;
-
    return playerStore.currentTime / playerStore.totalDuration;
 });
 
 onMounted(() => {
-   isMain &&
-      container.value?.addEventListener("click", (e) => {
-         const sliderWidth = window.getComputedStyle(container.value!).width;
-         const percentageToSeek = e.offsetX / parseFloat(sliderWidth);
-         const newTime = percentageToSeek * playerStore.totalDuration;
-         playerStore.setTime(newTime);
-      });
+   container.value?.addEventListener("click", (e) => {
+      const sliderWidth = window.getComputedStyle(container.value!).width;
+      const percentageToSeek = e.offsetX / parseFloat(sliderWidth);
+      const newTime = percentageToSeek * playerStore.totalDuration;
+      playerStore.setTime(newTime);
+   });
 });
 
 const Heights = Array(BarsCount)
@@ -35,13 +31,7 @@ const Heights = Array(BarsCount)
 </script>
 
 <template>
-   <div
-      ref="container"
-      class="w-full flex items-center justify-around"
-      :class="{
-         'cursor-pointer': isMain,
-      }"
-   >
+   <div ref="container" class="w-full flex items-center justify-around">
       <span
          v-for="(height, index) of Heights"
          :key="index"
