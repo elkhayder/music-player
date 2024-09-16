@@ -84,7 +84,7 @@ const device = useDevice();
             title="Shuffle"
          />
          <i class="fas fa-backward" @click="trackStore.previousTrack" />
-         <div
+         <button
             class="bg-white w-10 h-10 rounded-full flex items-center justify-center text-black"
             @click="playerStore.togglePlay"
             title="Play/Pause"
@@ -93,12 +93,13 @@ const device = useDevice();
             <i
                class="fas"
                :class="{
-                  'fa-pause': playerStore.isLoaded && playerStore.isPlaying,
+                  'fa-pause -ml-[1px]':
+                     playerStore.isLoaded && playerStore.isPlaying,
                   'fa-play': playerStore.isLoaded && !playerStore.isPlaying,
                   'fad fa-spinner fa-spin': !playerStore.isLoaded,
                }"
             />
-         </div>
+         </button>
          <i class="fas fa-forward" @click="trackStore.nextTrack" />
          <i
             class="far fa-repeat"

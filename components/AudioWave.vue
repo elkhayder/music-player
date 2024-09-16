@@ -19,41 +19,32 @@ const progress = computed(() => {
 });
 
 const updateBars = () => {
-   if (!tracksStore.currentTrack.waveform)
-      Heights.value = Array(BarsCount)
-         .fill(0)
-         .map(() =>
-            Math.floor(Math.random() * (HeightMax - HeightMin) + HeightMin)
-         );
-   else
-      fetch(tracksStore.currentTrack.waveform)
-         .then((response) => response.arrayBuffer())
-         .then((buffer) => WaveformData.create(buffer))
-         .then((waveform) => waveform.resample({ width: BarsCount }))
-         .then((waveform) => {
-            const channel = waveform.channel(0);
+   fetch(tracksStore.currentTrack.waveform)
+      .then((response) => response.arrayBuffer())
+      .then((buffer) => WaveformData.create(buffer))
+      .then((waveform) => waveform.resample({ width: BarsCount }))
+      .then((waveform) => {
+         const channel = waveform.channel(0);
 
-            let data = [];
-            let max = 0;
+         let data = [];
+         let max = 0;
 
-            for (let i = 0; i < waveform.length; i++) {
-               // height
-               let value = Math.abs(
-                  channel.max_sample(i) - channel.min_sample(i)
-               );
+         for (let i = 0; i < waveform.length; i++) {
+            // height
+            let value = Math.abs(channel.max_sample(i) - channel.min_sample(i));
 
-               data[i] = value;
+            data[i] = value;
 
-               if (value > max) max = value;
-            }
+            if (value > max) max = value;
+         }
 
-            for (let i = 0; i < waveform.length; i++) {
-               data[i] /= max; // standarize
-               data[i] *= HeightMax; // scale
-            }
+         for (let i = 0; i < waveform.length; i++) {
+            data[i] /= max; // standarize
+            data[i] *= HeightMax; // scale
+         }
 
-            Heights.value = data;
-         });
+         Heights.value = data;
+      });
 };
 
 onMounted(() => {

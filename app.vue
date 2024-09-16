@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
    <!-- TailwindCss Pro V5.15.4 -->
    <Link
@@ -21,7 +23,9 @@
       <!-- Portfolio: https://zelkhayder.me -->
       <!-- Github: @elkhayder -->
       <!-- Linkedin: @elkhayderzakaria -->
-      <NuxtPage />
+      <NuxtLayout>
+         <NuxtPage />
+      </NuxtLayout>
    </Body>
 </template>
 

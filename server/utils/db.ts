@@ -3,7 +3,7 @@ import { Album } from "../../utils/types";
 export const Howls: Album = {
    slug: "howls",
    title: "Howls",
-   cover: "howls.jpeg",
+   cover: "/cover/howls.jpeg",
    artist: "Shobee",
    tracks: [
       {

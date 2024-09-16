@@ -11,7 +11,7 @@ const tracks = computed(() => trackStore.album!.tracks);
 </script>
 
 <template>
-   <section class="w-full p-4 overflow-y-auto">
+   <section class="w-full py-4 overflow-y-auto">
       <TrackListEntry
          v-for="(track, index) of tracks"
          :key="index"

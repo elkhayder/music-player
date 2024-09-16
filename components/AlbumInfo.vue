@@ -6,7 +6,7 @@ const trackStore = useTracksStore();
 const album = computed(() => trackStore.album);
 
 watchEffect(() => {
-   if (process.client)
+   if (import.meta.client)
       navigator.mediaSession.metadata = new MediaMetadata({
          title: trackStore.currentTrack?.title,
          artist:
@@ -15,7 +15,7 @@ watchEffect(() => {
          album: trackStore.album?.title,
          artwork: [
             {
-               src: `/cover/${album.value!.cover}`,
+               src: album.value!.cover,
                sizes: "640x640",
                type: "image/jpeg",
             },
@@ -27,7 +27,7 @@ watchEffect(() => {
 <template>
    <div class="flex items-end gap-4 md:gap-8 max-md:w-full">
       <img
-         :src="`/cover/${album!.cover}`"
+         :src="album!.cover"
          alt="Spanish Audio Drills Logo"
          class="h-32 md:h-48 lg:h-56"
       />

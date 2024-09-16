@@ -1,16 +1,16 @@
-import Albums from "../utils/db";
+import Albums from "@/server/utils/db";
 
 export default defineEventHandler(async (event) => {
-   const query = getQuery(event);
+   const slug = event.context.params?.slug;
 
-   if (!query.album) {
+   if (!slug) {
       throw createError({
          status: 400,
-         statusMessage: "Missing Album query parameter",
+         statusMessage: "Missing Album slug",
       });
    }
 
-   const index = Albums.findIndex((x) => x.slug === query.album);
+   const index = Albums.findIndex((x) => x.slug === slug);
 
    if (index === -1) {
       throw createError({ status: 404, statusMessage: "Album not found" });

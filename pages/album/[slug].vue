@@ -5,11 +5,7 @@ import { useTracksStore } from "@/stores/tracks";
 const route = useRoute();
 const trackStore = useTracksStore();
 
-const { data } = await useFetch<Album>("/api/album", {
-   query: {
-      album: route.params.slug,
-   },
-});
+const { data } = await useFetch<Album>("/api/album/" + route.params.slug);
 
 if (data.value) {
    trackStore.setAlbum(data.value);
@@ -23,23 +19,11 @@ if (data.value) {
 
 <template>
    <Title>{{ trackStore.album!.title }} — Music Player — zelkhayder.me</Title>
-   <main class="max-w-6xl mx-auto relative">
-      <section
-         class="flex max-md:flex-col items-center justify-between p-8 gap-8"
-      >
-         <AlbumInfo />
-         <PlayingTrack />
-      </section>
-      <TrackList />
-   </main>
-   <footer
-      class="text-sm text-center font-mono font-normal p-4 mb-2 text-gray-400"
-   >
-      Created with ❤️ by
-      <a href="https://zelkhayder.me" target="_blank" class="underline">
-         @elkhayder
-      </a>
-   </footer>
+   <section class="flex max-md:flex-col items-center justify-between gap-8">
+      <AlbumInfo />
+      <PlayingTrack />
+   </section>
+   <TrackList />
    <audio class="hidden" crossorigin="anonymous" id="audio-player" />
 </template>
 
